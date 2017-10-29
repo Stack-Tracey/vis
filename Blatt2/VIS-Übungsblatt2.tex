@@ -1,5 +1,7 @@
 \documentclass[ngerman]{fbi-aufgabenblatt}
 
+\usepackage{tikz}
+
 % Folgende Angaben bitte anpassen
 
 \renewcommand{\Vorlesung}{VIS}
@@ -29,7 +31,49 @@ Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine 
 \aufgabe{Nebenläufigkeit}
 
 \subsection*{a)}
+\begin{tikzpicture}[->]
+\node (Top) at (0,0) {};
+\node[below] (Bottom) at (0,-7) {Zeit};
+\node[right] (HT) at (1,0.5) {Hauptthread};
+\node[right] (DT) at (5, 0.5) {Downloadthread};
+\draw (Top) -- (Bottom);
+
+\draw (0.5,0) rectangle (4,-1);
+\node (Drei) at (2.25,-0.5) {3};
+\draw (0.5,-1) rectangle (4,-2);
+\node (Zwei) at (2.25, -1.5) {2};
+\draw (5,-2) rectangle (8.5,-5);
+\node (Eins) at (6.75,-3.5) {1};
+\draw (0.5,-5) rectangle (4,-6);
+\node (Vier) at (2.25,-5.5) {4};
+\draw (0.5,-6) rectangle (4,-7);
+\node (Fuenf) at (2.25, -6.5) {5};
+
+\end{tikzpicture}
 \subsection*{b)}
+Wenn der Ablauf so ausgeführt wird, wie er in der Zeichnung aus Aufgabenteil a) zu sehen ist, wird das heruntergeladene Bild angezeigt, da der Hauptthread bei dieser Ausführungsreihenfolge erst nach dem beenden des Downloadthreads fortfährt. Das Problem des Quellcodes ist, dass er nicht festlegt, dass der Hauptthread auf den Downloadthread warten muss. Es wäre also auch die folgende Reihenfolge möglich, wenn der Hauptthread nach dem Start des Downloadthreads parallel zum Downloadthread weiterläuft: \\
+
+\begin{tikzpicture}[->]
+\node (Top) at (0,0) {};
+\node[below] (Bottom) at (0,-5) {Zeit};
+\node[right] (HT) at (1,0.5) {Hauptthread};
+\node[right] (DT) at (5, 0.5) {Downloadthread};
+\draw (Top) -- (Bottom);
+
+\draw (0.5,0) rectangle (4,-1);
+\node (Drei) at (2.25,-0.5) {3};
+\draw (0.5,-1) rectangle (4,-2);
+\node (Zwei) at (2.25, -1.5) {2};
+\draw (5,-2) rectangle (8.5,-5);
+\node (Eins) at (6.75,-3.5) {1};
+\draw (0.5,-2.5) rectangle (4,-3.5);
+\node (Vier) at (2.25,-3) {4};
+\draw (0.5,-3.5) rectangle (4,-4.5);
+\node (Fuenf) at (2.25, -4) {5};
+
+\end{tikzpicture} \\
+Da die Zuweisung zum \textit{result}-Feld die letzte Aktion des Ausführungsschritts 1 ist, wird der Ausführungsschritt 4 nicht das anzuzeigende Bild von dem Downloader-Objekt bekommen, sodass es in Ausführungsschritt 5 nicht angezeigt wird.
 \subsection*{c)}
+Die \textit{join()}-Methode kann auf einem Thread-Objekt aufgerufen werden, um auf das Beenden des Threads zu warten. Die Ausführung des aufrufenden Threads wird durch den Aufruf pausiert, bis der andere Thread beendet ist.
 
 \end{document}
