@@ -31,7 +31,6 @@ Um festzustellen, ob tatsächlich ein globaler Deadlock vorliegt, wird die Warte
 Die Weiterleitung der Warteinformation wird nur dann vorgenommen, wenn 
 $tm (T_{n}) < tm (T_{1})$ gilt. Damit wird bei einem globalen Deadlock mit zwei Rechnern gewährleistet, dass nur einer die Warteinformation weiterleitet. Bei mehr als zwei Rechnern ist es jedoch weiterhin möglich, dass diese von mehr als einem Rechner weitergegeben wird.
 
-
 \aufgabe{Threads}
 
 \subsection*{a)}
@@ -39,7 +38,7 @@ Die Ausführung eines Programmes wird durch das Betriebssystem in einem Prozess 
 
 \subsection*{c)}
 Das Problem bei der Verwendung der \textit{sleep}-Methode eines Java-Threads zur Lösung von Nebenläufigkeitsproblemen, ist, dass das Verwenden der \textit{sleep}-Methode nicht sicherstellt, dass die Ausführungsreihenfolge, die durch die Verwendung erzwungen werden soll, wirklich eingehalten wird. \\
-\\
+
 Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine Threads zur Ausführung kommt, und die Reihenfolge bei mehrfacher Ausführung variieren kann. Hierdurch kann es sein, dass ein Thread durch die \textit{sleep}-Methode dazu gezwungen werden soll, auf die Ausführung einer Aktion eines anderen Threads für beispielsweise $2$ Sekunden zu warten, dieser andere Thread in diesen $2$ Sekunden aber nicht zur Ausführung kommt. Hierdurch kann dazu kommen, dass die Reihenfolge trotz der $2$ Sekunden falsch ist.
 \subsection*{d)}
 
