@@ -18,6 +18,7 @@
 Die Deadlock-Erkennung in Verteilten Systemen ist wesentlich aufwendiger als in zentralisierten. Es werden Kommunikationsvorgänge zur Mitteilung von Wartebeziehungen benötigt und ein einfacher wait-for Graph ist nicht mehr hinreichend.
  Da jeder Knoten nur für lokale Transaktionen die derzeitige Wartesituation kennt, ist es schwierig eine korrekte Deadlock-Erkennung zu realisieren. Warteinformationen von externen Transaktionen sind wegen ihrer zeitlichen Verzögerungen bei der Übertragung idR. veraltet. 
 Eine mögliche Lösung wäre das Obermark-Verfahren
+
 Dieses geht davon aus, dass in jedem Rechner ein Prozess läuft, der sich um die Deadlock-Erkennung kümmert und mit den entsprechenden Prozessen der anderen Teilnehmer kommuniziert. Jeder beteiligte Prozess hat einen lokalen wait-for Graphen mit sämtlichen Wartebeziehungen lokaler und externer Transaktionen. Damit lassen sich lokale Deadlocks sofort und ohne Kommunikation erkennen. 
 
 Im wait-for Graphen wird ein Knoten $EX$ geführt, der Wartebeziehungen zu Sub-Transaktionen $T_{i}$ auf anderen Rechnern markiert. $T_{i}$ bekommt einen global eindeutigen Zeitstempel $tm(T_{i})$ und es wird 
@@ -25,7 +26,7 @@ eine Wartebeziehung $EX \rightarrow T_{i}$ aufgenommen, da möglicherweise an an
 
 $EX \rightarrow T_{1} \rightarrow T_{2} \rightarrow ... \rightarrow T_{n} \rightarrow EX$
 
-Um festzustellen, ob tatsächlich ein globaler Deadlock vorliegt, wird die Warteinformation an den Rechner weitergeleitet, an dem Transaktion $T_{i}$ die Sub-Transaktion gestartet hatte. Nach Empfang solcher Warteinformationen vervollständigt der zuständige Prozess seinen wait-for Graphen und führt darauf eine Zyklensuche durch. Zur Erkennung eines globalen Deadlocks kann dazu erneut die Weiterleitung der erweiterten Warteinformation an einen anderen Rechner erforderlich sein. Wird ein vollständiger Zyklus festgestellt, erfolgt die Rücksetzung einer der beteiligten Transaktionen. Dabei sollte, wenn möglich, eine lokale Transaktion ausgewählt werden, um den Deadlock möglichst schnell zu beheben.
+Um festzustellen, ob tatsächlich ein globaler Deadlock vorliegt, wird die Warteinformation an den Rechner weitergeleitet, an dem Transaktion $T_{i}$ die Sub-Transaktion gestartet hatte. Nach Empfang solcher Warteinformationen vervollständigt der zuständige Prozess seinen wait-for Graphen und führt darauf eine Zyklensuche durch. Zur Erkennung eines globalen Deadlocks kann dazu erneut die Weiterleitung der erweiterten Warteinformation an einen anderen Rechner erforderlich sein. Wird ein vollständiger Zyklus festgestellt, erfolgt die Rücksetzung einer der beteiligten Transaktionen. Dabei sollte wenn möglich, eine lokale Transaktion verwendet werden, um den Deadlock möglichst schnell zu beheben.
 
 Die Weiterleitung der Warteinformation wird nur dann vorgenommen, wenn 
 $tm (T_{n}) < tm (T_{1})$ gilt. Damit wird bei einem globalen Deadlock mit zwei Rechnern gewährleistet, dass nur einer die Warteinformation weiterleitet. Bei mehr als zwei Rechnern ist es jedoch weiterhin möglich, dass diese von mehr als einem Rechner weitergegeben wird.
