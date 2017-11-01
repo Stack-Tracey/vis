@@ -39,8 +39,11 @@ Die Ausführung eines Programmes wird durch das Betriebssystem in einem Prozess 
 \subsection*{c)}
 Das Problem bei der Verwendung der \textit{sleep}-Methode eines Java-Threads zur Lösung von Nebenläufigkeitsproblemen, ist, dass das Verwenden der \textit{sleep}-Methode nicht sicherstellt, dass die Ausführungsreihenfolge, die durch die Verwendung erzwungen werden soll, wirklich eingehalten wird. \\
 
-Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine Threads zur Ausführung kommt, und die Reihenfolge bei mehrfacher Ausführung variieren kann. Hierdurch kann es sein, dass ein Thread durch die \textit{sleep}-Methode dazu gezwungen werden soll, auf die Ausführung einer Aktion eines anderen Threads für beispielsweise $2$ Sekunden zu warten, dieser andere Thread in diesen $2$ Sekunden aber nicht zur Ausführung kommt. Hierdurch kann dazu kommen, dass die Reihenfolge trotz der $2$ Sekunden falsch ist.
+Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine Threads zur Ausführung kommt, und die Reihenfolge bei mehrfacher Ausführung variieren kann. Hierdurch kann es sein, dass ein Thread durch die \textit{sleep}-Methode dazu gezwungen werden soll, auf die Ausführung einer Aktion eines anderen Threads für beispielsweise $2$ Sekunden zu warten, dieser andere Thread in diesen $2$ Sekunden aber nicht zur Ausführung kommt. Hierdurch kann es dazu kommen, dass die Reihenfolge trotz der $2$ Sekunden falsch ist.
 \subsection*{d)}
+
+Threat.Sleep(n) bedeuted, dass der aktuelle Threat für n Zeiteinheiten geblockt wird. Die Länge einer Zeiteinheit ist verschieden, je nach OS Versionen, Prozessor und generellen Schwankungen von mehreren Millisekunden. Dies bedeutet, dass der Threat sehr wahrscheinlich für mehr als n Millisekunden blockiert wird. Die Threats werden nicht innerhalb der 5ms Tacktung fertig und es kommt zum Fehlverhalten.
+
 
 \aufgabe{Nebenläufigkeit}
 
