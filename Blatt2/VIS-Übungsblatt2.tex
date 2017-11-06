@@ -7,14 +7,24 @@
 \renewcommand{\Vorlesung}{VIS}
 \renewcommand{\Semester}{WiSe 2017}
 
-\renewcommand{\Aufgabenblatt}{2}
+\renewcommand{\Aufgabenblatt}{3}
 \renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
 
 \begin{document}
-\setcounter{section}{1}
-\aufgabe{Deadlocks}
+\setcounter{section}{0}
+   
 
-\subsection*{c)}
+\aufgabe{Backup}
+
+\subsection*{1}
+\begin{description}
+	\item[Diebstahl] Der Laptop wird entwendet
+	\item [Hardwaredefekte] Der Laptop läuft voll Wasser oder fällt runter.
+	\item [höhereGewalt] Das Haus brennt und der Laptop steht auf dem Schreibtisch
+	\item [versehentliches Löschen] rm -r /*
+	\item[Viren u. andere Schadprogramme] Virus verschlüsselt die gesammte Festplatte
+\end{description} 
+\subsection*{4}
 Die Deadlock-Erkennung in Verteilten Systemen ist wesentlich aufwendiger als in zentralisierten. Es werden Kommunikationsvorgänge zur Mitteilung von Wartebeziehungen benötigt und ein einfacher wait-for Graph ist nicht mehr hinreichend.
  Da jeder Knoten nur für lokale Transaktionen die derzeitige Wartesituation kennt, ist es schwierig eine korrekte Deadlock-Erkennung zu realisieren. Warteinformationen von externen Transaktionen sind wegen ihrer zeitlichen Verzögerungen bei der Übertragung idR. veraltet. 
 Eine mögliche Lösung wäre das Obermark-Verfahren
@@ -37,7 +47,7 @@ $tm (T_{n}) < tm (T_{1})$ gilt. Damit wird bei einem globalen Deadlock mit zwei 
 Die Ausführung eines Programmes wird durch das Betriebssystem in einem Prozess gekapselt. Der Prozess erhält hierbei einen eigenen Adressraum im Speicher, sodass kein Prozess die Daten eines anderen Prozesses lesen kann. Der Informationsaustausch zwischen zwei Prozessen kann über Nachrichten realisiert werden. Die nebenläufigen Teile eines Programms werden als Threads ausgeführt, die auf den Speicher des Prozesses zugreifen können. Alle Threads eines Prozesses haben also einen gemeinsamen Speicher.
 
 \subsection*{c)}
-Das Problem bei der Verwendung der \textit{sleep}-Methode eines Java-Threads zur Lösung von Nebenläufigkeitsproblemen, ist, dass das Verwenden der \textit{sleep}-Methode nicht sicherstellt, dass die Ausführungsreihenfolge, die durch die Verwendung erzwungen werden soll, wirklich eingehalten wird. \\
+Das Problem bei der Verwendung der \textit{sleep}-Methode eines Java-Threads zur Lösung von Nebenläufigkeitsproblemen, ist, dass das Verwenden der {sleep}-Methode nicht sicherstellt, dass die Ausführungsreihenfolge, die durch die Verwendung erzwungen werden soll, wirklich eingehalten wird. \\
 
 Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine Threads zur Ausführung kommt, und die Reihenfolge bei mehrfacher Ausführung variieren kann. Hierdurch kann es sein, dass ein Thread durch die \textit{sleep}-Methode dazu gezwungen werden soll, auf die Ausführung einer Aktion eines anderen Threads für beispielsweise $2$ Sekunden zu warten, dieser andere Thread in diesen $2$ Sekunden aber nicht zur Ausführung kommt. Hierdurch kann es dazu kommen, dass die Reihenfolge trotz der $2$ Sekunden falsch ist.
 \subsection*{d)}

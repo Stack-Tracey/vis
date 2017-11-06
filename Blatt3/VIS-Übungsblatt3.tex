@@ -1,0 +1,53 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+
+\usepackage{tikz}
+
+% Folgende Angaben bitte anpassen
+
+\renewcommand{\Vorlesung}{VIS}
+\renewcommand{\Semester}{WiSe 2017}
+
+\renewcommand{\Aufgabenblatt}{3}
+\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+
+\begin{document}
+\setcounter{section}{0}
+   
+
+\aufgabe{Backup}
+
+\subsection*{1)}
+\begin{description}
+	\item[Diebstahl] Der Laptop wird entwendet.
+	\item [Hardwaredefekte] Der Laptop läuft voll Wasser oder fällt runter.
+	\item [höhereGewalt] Das Haus brennt und der Laptop steht auf dem Schreibtisch.
+	\item [versehentliches Löschen] rm -r /*
+	\item[Viren u. andere Schadprogramme] Virus verschlüsselt die gesammte Festplatte.
+\end{description} 
+
+\subsection*{4)}
+\begin{description}
+	\item[Inkerementelles Backup] 
+	Sichert alle seit dem letzten Backup hinzugekommenen und veränderten Daten.
+	Diese Schritte sind mehrfach hintereinander durchführbar und alle diese Zwischenstände zwischen den Vollbackups sind rekonstruierbar. Der Restore erfolgt in Reihenfolge der Sicherungen und alle Sicherungen seit dem letzten Vollbackup sind erforderlich. 
+	
+	\item [Differenzielles Backup] 
+	Der Unterschied zum inkrementellen Backup besteht hauptsächlich darin, dass nur die Daten gesichert werden die seit dem letzten Voll-Backup hinzugekommenen sind und/oder verändert wurden.
+	Der Restore erfordert nur ein Vollbackup und das letzte differentielle Backup. 
+\end{description} 
+
+Der Vorteil von inkrementellen Backups gegenüber differenziellen liegt hauptsächlich darin, dass sie regelmässig durchgeführt, weniger Speicherkapazität braucht. Auch die Wiederherstellung ab einem präziseren Zeitpunkt ist möglich,  dafür braucht diese jedoch länger und die Handhabung ist komplizierter als bei einem differenziellen Backup, da alle Dateien der „Sicherungskette“ für eine Wiederherstellung benötigt werden.
+
+
+\aufgabe{RAID}
+
+\subsection*{5)}
+
+\subsection*{7)}
+
+\subsection*{8b)}
+
+\subsection*{8c)}
+
+
+\end{document}
