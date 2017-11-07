@@ -1,6 +1,7 @@
 \documentclass[ngerman]{fbi-aufgabenblatt}
 
 \usepackage{tikz}
+\usepackage{listings}
 
 % Folgende Angaben bitte anpassen
 
@@ -57,6 +58,122 @@ Da RAID nicht vor versehentlichem oder bösartigem Löschen schützt, erspart es
 \subsection*{8b)}
 
 \subsection*{8c)}
+Das Codewort ist 'Plattenredundanz'. Wir haben den folgenden Quelltext implementiert, um die zweite Festplatte wiederherzustellen und das Bild zu laden:
+\lstset{tabsize=2}
+\begin{lstlisting}
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+/**
+ * Dieses Programm kann ohne Parameter gestartet werden und geht davon
+ * aus, dass die Festplatten im Verzeichnis 'data/' abgelegt sind. Es
+ * stellt zunaechst die Festplatte 2 in der Datei 'data/disk2Rec'
+ * wieder her und laedt die Daten anschliessend in die Datei
+ * 'data/image.jpg'
+ */
+public class RecoverAndWrite {
+
+	private static final int CHUNKSIZE = 4096;
+
+	/**
+	 * Iteriert Block fuer Block ueber die gebenen Festplatten und
+	 * uebergibt in jeder Iteration einen Block von jeder Festplatte
+	 * an die Funktion f. Das Ergebnis von f wird in die Datei out
+	 * geschrieben.
+	 * 
+	 * @param ins
+	 *            Die Pfade zu den Festplatten, von denen gelesen
+	 *            werden soll
+	 * @param f
+	 *            Die Funktion, der ein Block von jeder Festplatte
+	 *            uebergeben wird
+	 * @param out
+	 *            Der Pfad zu der Output-Datei
+	 */
+	private static void chunkapplyAndWrite(String[] ins,
+			Function<List<byte[]>, byte[]> f, String out)
+			throws IOException {
+		List<InputStream> inputStreams = Arrays.asList(ins).stream()
+				.map((in) -> {
+					try {
+						return new FileInputStream(in);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+						return null;
+					}
+				}).collect(Collectors.toList());
+		OutputStream outputStream = new FileOutputStream(out);
+		boolean reading = true;
+		while (reading) {
+			List<byte[]> chunks = inputStreams.stream()
+					.map((inputStream) -> {
+						byte[] chunk = new byte[CHUNKSIZE];
+						try {
+							if (inputStream.read(chunk) == -1) {
+								chunk = null;
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return chunk;
+					}).collect(Collectors.toList());
+			reading = !chunks.contains(null);
+			if (reading) {
+				byte[] appliedChunk = f.apply(chunks);
+				outputStream.write(appliedChunk);
+			}
+		}
+		outputStream.close();
+	}
+
+	/**
+	 * Stellt einen Block wieder her.
+	 */
+	private static byte[] restore(List<byte[]> chunks) {
+		byte[] result = new byte[CHUNKSIZE];
+		for (byte[] chunk : chunks) {
+			for (int i = 0; i < CHUNKSIZE; ++i) {
+				result[i] = (byte) (result[i] ^ chunk[i]);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Konkateniert die Bloecke, um einen Teil des Bildes zu laden.
+	 */
+	private static byte[] load(List<byte[]> chunks) {
+		byte[] result = new byte[CHUNKSIZE * chunks.size()];
+		for (int i = 0; i < chunks.size(); ++i) {
+			for (int j = 0; j < CHUNKSIZE; ++j) {
+				result[i * CHUNKSIZE + j] = chunks.get(i)[j];
+			}
+		}
+		return result;
+	}
+
+	public static void main(String[] args) throws IOException {
+		String d0 = "data/disk0";
+		String d1 = "data/disk1";
+		String d2Rec = "data/disk2Rec";
+		String d3 = "data/disk3";
+		String img = "data/image.jpg";
+		String[] restoreIns = { d0, d1, d3 };
+		chunkapplyAndWrite(restoreIns, (chunks) -> restore(chunks),
+				d2Rec);
+		String[] loadIns = { d0, d1, d2Rec };
+		chunkapplyAndWrite(loadIns, (chunks) -> load(chunks), img);
+	}
+}
+
+\end{lstlisting}
 
 \end{document}
