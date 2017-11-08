@@ -2,7 +2,7 @@
 
 \usepackage{tikz}
 \usepackage{listings}
-
+\usepackage{amsmath}
 % Folgende Angaben bitte anpassen
 
 \renewcommand{\Vorlesung}{VIS}
@@ -56,6 +56,16 @@ Da RAID nicht vor versehentlichem oder bösartigem Löschen schützt, erspart es
 \end{description} 
 
 \subsection*{8b)}
+
+Mit Small-Write Algorithmus:\\\\
+$.\quad 10010111 \\\oplus \; 01101011 \\ \oplus \; 00101101\\ = \; 11010001$\\\\
+Ohne Small-Write Algorithmus:\\\\
+$.\quad 10010111 \\\oplus \; 10010011 \\\oplus \; 00011011\\ \oplus \; 11001110 \\= \; 11010001$\\
+
+Neue Belegung:\\\\
+$HDD-1 : 10010111$\\
+$HDD-P : 11010001$\\\\
+Der Small-Write Algorithmus muss weniger Rechenoperationen durchführen, hierbei sind 1 Logischer Schreibzugriff = 2 physische Lesezugriffe + 2 physische Schreibzugriffe und das konstant. Ohne den Algorithmus steigen die Rechenoperationen proportional zu der Anzahl eingesetzter Speichermedien für das Einfügen von Dateien.
 
 \subsection*{8c)}
 Das Codewort ist 'Plattenredundanz'. Wir haben den folgenden Quelltext implementiert, um die zweite Festplatte wiederherzustellen und das Bild zu laden:
