@@ -4,6 +4,12 @@
 \usepackage{listings}
 \usepackage{amsmath}
 % Folgende Angaben bitte anpassen
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
 
 \renewcommand{\Vorlesung}{VIS}
 \renewcommand{\Semester}{WiSe 2017}
@@ -69,7 +75,20 @@ Der Small-Write Algorithmus muss weniger Rechenoperationen für die Paritätsber
 
 \subsection*{8c)}
 Das Codewort ist 'Plattenredundanz'. Wir haben den folgenden Quelltext implementiert, um die zweite Festplatte wiederherzustellen und das Bild zu laden:
-\lstset{tabsize=2}
+\lstset{language=Java,
+  tabsize=2,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
 \begin{lstlisting}
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
