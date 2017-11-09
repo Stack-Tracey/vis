@@ -51,11 +51,11 @@ Das Problem bei der Verwendung der \textit{sleep}-Methode eines Java-Threads zur
 
 Das Problem entsteht dadurch, dass nicht festgelegt ist, wann welcher Teil eine Threads zur Ausführung kommt, und die Reihenfolge bei mehrfacher Ausführung variieren kann. Hierdurch kann es sein, dass ein Thread durch die \textit{sleep}-Methode dazu gezwungen werden soll, auf die Ausführung einer Aktion eines anderen Threads für beispielsweise $2$ Sekunden zu warten, dieser andere Thread in diesen $2$ Sekunden aber nicht zur Ausführung kommt. Hierdurch kann es dazu kommen, dass die Reihenfolge trotz der $2$ Sekunden falsch ist.
 \subsection*{d)}
-Thread.Sleep(n) bedeuted, dass der aktuelle Thread für mindestens n Zeiteinheiten geblockt wird. Die Länge einer Zeiteinheit ist verschieden, je nach OS Versionen, Prozessor und generellen Schwankungen von mehreren Millisekunden. 
-Es können zusätzlich "JVM native" Threads, wie der GarbageCollector oder ähnliche Unterbrechungen dazwischen kommen und der Thread wird ungewollt zu spät ausgeführt.
+Thread.sleep(n) bedeutet, dass der aktuelle Thread für möglichst $n$ Zeiteinheiten (und nicht weniger) geblockt wird. Die Genauigkeit dieser Zeiteinheit ist jedoch abhängig von der Genauigkeit des System-Timers und des Schedulers der verwendeten OS-Version und des Prozessor.
 
-Insgesamt bedeutet das, dass der Thread sehr wahrscheinlich für mehr als n Millisekunden blockiert wird.
-Die Threads werden nicht innerhalb der 5ms Tacktung fertig und es kommt zum Fehlverhalten.
+Durch \textit{Interrupts} wie bspw. \textit{JVM native}-Threads (z.B GarbageCollector) oder schlechtes Scheduling kann es außerdem passieren, dass der Thread ungewollt zu spät ausgeführt oder unterbrochen wird.
+
+Insgesamt bedeutet dies, dass Thread.sleep(n) keine Unterbrechung von genau $n$ Millisekunden garantieren kann. Die Threads werden nicht notwendigerweise innerhalb der 5ms Taktung fertig und Fehlverhalten könnte auftreten.
 
 \aufgabe{Nebenläufigkeit}
 
@@ -80,7 +80,7 @@ Die Threads werden nicht innerhalb der 5ms Tacktung fertig und es kommt zum Fehl
 
 \end{tikzpicture}
 \subsection*{b)}
-Wenn der Ablauf so ausgeführt wird, wie er in der Zeichnung aus Aufgabenteil a) zu sehen ist, wird das heruntergeladene Bild angezeigt, da der Hauptthread bei dieser Ausführungsreihenfolge erst nach dem beenden des Downloadthreads fortfährt. Das Problem des Quellcodes ist, dass er nicht festlegt, dass der Hauptthread auf den Downloadthread warten muss. Es wäre also auch die folgende Reihenfolge möglich, wenn der Hauptthread nach dem Start des Downloadthreads parallel zum Downloadthread weiterläuft: \\
+Wenn der Ablauf so ausgeführt wird, wie er in der Zeichnung aus Aufgabenteil a) zu sehen ist, wird das heruntergeladene Bild angezeigt, da der Hauptthread bei dieser Ausführungsreihenfolge erst nach dem Beenden des Downloadthreads fortfährt. Das Problem des Quellcodes ist, dass er nicht festlegt, dass der Hauptthread auf den Downloadthread warten muss. Es wäre also auch die folgende Reihenfolge möglich, wenn der Hauptthread nach dem Start des Downloadthreads parallel zum Downloadthread weiterläuft: \\
 
 \begin{tikzpicture}[->]
 \node (Top) at (0,0) {};
