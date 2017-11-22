@@ -40,6 +40,32 @@
   Die JVM vom Server führt die Methoden auf dem Objekt aus.
 
 	\subsection*{c)}
+  Es gibt 3 Fehlersemantiken:
 
+  \begin{itemize}
+    \item At-most-once-Sematik
+      \begin{itemize}
+        \item es wird höchstens ein Ergebnis oder eine Exception zurückgegeben
+        \item Übertragungsfehler können durch neuübertragung maskiert werden
+      \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+    \item At-least-once-Semantik
+      \begin{itemize}
+        \item Es wird mindestens ein oder mehrere Aufrufe gemacht
+        \item für jeden wird ein Ergebnis oder eine Exception zurückgeliefert
+        \item nur gültig wenn Aufrufe den gleichen Wert zurückliefern (Idempotenz)
+      \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+    \item Maybe-Semantik 
+      \begin{itemize}
+        \item es wird entweder ein Ergebnis oder eine Exception zurückgeliefert
+        \item kritsch sind hierbei Übertragnungsfehler oder Servercrashfehler
+        \item diese Fehler können eventuell nicht wahrgenommen werden 
+      \end{itemize}
+  \end{itemize}
 
 \end{document}
