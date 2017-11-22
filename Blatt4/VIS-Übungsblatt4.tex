@@ -16,6 +16,20 @@
 	\aufgabe{Fehlertoleranz}
 
 	\subsection*{3)}
+  Die beiden Datenbankserver sind zu 0,5\% nicht verfügbar. Die 150 Webserver
+	sind mit jeweils 0,5\% unverfügbar.
+	Für den Gesamtausfall ergibt sich folgende Rechnung: \newline
+	$0.1* 0.05 + {0.05}^{150} = 0.005 + 0 = 0.005$ \newline
+	Da es sich hier um Webserver und Datenbankserver handelt, müssen einerseits
+	beide Datenbanken
+	oder alle Webserver ausfallen, sodass der Dienst nicht mehr verfügbar ist.
+	Da die Ausfallwahrscheinlichkeit der 150 Webserver ganz nah bei 0 liegt, ist
+	nur die Ausfallwahrscheinlichkeit der Webserver zu betrachten.
+	\newline
+	Die Anzahl an Stunden, die der Dienst nicht Verfügbar ist, ergibt sich wie folgt: \newline
+	$365 * 24 * 0.005 = 43.8 Stunden$ \newline
+	Der Server ist nach der Rechnung 43.8 Stunden im Jahr nicht verfügbar.
+	Das Versprechen ist eine Lüge!
 	
 	\subsection*{5)}
 
