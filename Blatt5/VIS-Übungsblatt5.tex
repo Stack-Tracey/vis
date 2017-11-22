@@ -31,6 +31,13 @@
 	\aufgabe{Remote Method Invocation}
 	
 	\subsection*{b)}
+  Der Server erstellt und exportiert eine RMI-Registry, die für einen bestimmten 
+  Port request akzeptiert. Bei der Registry wird auch das Remote Objekt
+  angemeldet.  Der Client holt sich über die RMI-Registry die Referenz des
+  Remote Objektes vom Server. Nach erhalt der Referenz zum Remote Objekt,
+  kann der Client über ein Interface Methoden an seinem Remote Objekt aufrufen.
+  Der Client erhält Rückgabewerte, sowie die zu beachtenden RemoteExceptions.
+  Die JVM vom Server führt die Methoden auf dem Objekt aus.
 
 	\subsection*{c)}
 
