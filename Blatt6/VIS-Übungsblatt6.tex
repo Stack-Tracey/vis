@@ -33,10 +33,10 @@
 	Wenn ein Prozess p z.B. durch einen timeout feststellt, dass der Koordinator Prozess x nicht mehr erreichbar ist, sendet dieser einen request an alle Prozesse mit höherer ID Q, so dass gilt Q.ID > p.ID und wartet auf deren response. Kommt einer, hört p auf zu senden und der Prozess der geantwortet hat, sendet wiederum rekursiv an alle höheren Prozesse. Es gilt p = x sobald p keine Antworten erhält. Dieser teilt per boradcast mit nun neuer Koodinator zu sein.
 
 	5 sendet request an 9 und 11\\
-	5 bekommt Antword von 9\\
+	5 bekommt Antwort von 9\\
 	5 hört auf zu senden\\
 	9 sendet request an 11\\
-	9 bekommt keine Antword\\
+	9 bekommt keine Antwort\\
 	9 wird Koordinator\\
 	9 broadcasted die Nachricht der neue Koodinator zu sein an 3 und 5 	
 		
