@@ -2,6 +2,7 @@
 %	\usepackage{tikz}
 	\usepackage{listings}
 	\usepackage{color}
+	\usepackage{amsmath}
 	\definecolor{lightgray}{rgb}{.9,.9,.9}
 	\definecolor{darkgray}{rgb}{.4,.4,.4}
 	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
@@ -42,8 +43,15 @@
 	\aufgabe{Zeitsynchronisation}
 	
 	\subsection*{a)}
-
-	\subsection*{b)}	
+	Die im Folgenden genutzten Variablen sind wie auf der Folie über die Cristians-Methode aus der Vorlesung benannt.
+	\begin{align*}
+		t&=10:14:05\\
+		T_{round} &= 10:14:06 - 10:14:00 = 00:00:06 \\
+		T_{trans} &= \frac{T_{round}}{2}= \frac{00:00:06}{2}=00:00:03 \\
+		T_{sync} &= t+T_{trans} = 10:14:05+00:00:03 = 10:14:08
+	\end{align*}
+	\subsection*{b)}
+	Die Berechnung mit der Cristians-Methode basiert auf der Annahme, dass die beiden Nachrichten die gleiche Laufzeit haben. Diese Annahme wird benötigt, um die Übertragungszeit der Antwort aus der Summe der Übertragungszeiten errechnen zu können.
 	\aufgabe{Bully-Algorithmus}
 	
 	\subsection*{a)}
