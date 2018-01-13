@@ -38,12 +38,17 @@
 	\aufgabe{Cipher-Block-Chaining-Modus}
 	
 	\subsection*{a)}
+	Zwei identische Klartexte die lediglich einen anderen Initialisierungsvektor haben sind nur in der Länge identisch.
+	Der Vektor wird genutzt um eine vom Schlüssel unabhängige randomisierung zu erreichen.
 	
 	\subsection*{b)}
+	Auch hier unterscheidet sich das Chiffrat stark voneinader, da Folgeblöcke vom Vorgänger abhängen. Ändert sich also ein Bit im ersten Block, hat das Auswirkungen auf alle folgenden.
 	
 	\subsection*{c)}
+	Eine Änderung eines Bits in einem Chiffratblock hat zur Folge, dass der entsprechende Nachrichtenblock randomisiert wird, während im Klartext des darauffolgenden Blocks genau die gleichen Bits geändert werden.
 
 	\subsection*{d)}
+	Die entschlüsselung wäre nur möglich, wenn der Initialisierungsverktor bekannt ist. Diesen könnte man dann mit sämtlichen möglichen Belegungen durchtesten und die Ergebnisse Vergleichen.
 	
 	\aufgabe{Hybrides Kryptosystem}
 	
