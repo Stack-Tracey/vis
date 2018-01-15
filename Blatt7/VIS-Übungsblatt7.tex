@@ -58,6 +58,9 @@
 	
 	\subsection*{a)}
 	
+	Das RSA-Verfahren basiert auf der Faktorisierungsannhame, die besagt, dass es nicht effizient möglich ist, die Primfaktoren einer großen Zahl zu berechnen. \\
+	Ein Angreifer besitzt den öffentlichen Schlüssel, der beispielsweise die Werte $c=7$ und $n=299$ haben kann, und die verschlüsselte Nachricht, die beispielsweise $c(m)=107$ lauten kann. Aufgrund der Faktorisierungsannahme, kann der Angreifer nicht die beiden Primfaktoren $p=13$ und $q=23$ von $n$ bestimmen. Dadurch ist es ihm nicht möglich die Zahl $\phi(n)=(p-1)\cdot(q-1)=(13-1)\cdot(23-1)=264$ zu bestimmen, die er benötigen würde, um mit Hilfe des erweiterten euklidischen Algorithmus das multiplikative Inverse $d$ von $c$ in $\phi(n)$ mit $d=151$ zu errechnen. Da der Angreifer also aufgrund der Faktorisierungsannahme mit diesem Verfahren nicht an das $d$ kommen wird, wird er nie herausfinden, dass der Inhalt der Nachricht $c(m)^d \mod n = 107^{151} \mod 299 = 42$ lautet.
+	
 	\subsection*{b)}
 	Sei zunächst $m_k$ das $k$-te Zeichen des Textes, $c$ der Exponent aus der zweiten Textdatei sowie $n$ der zugehörige Modulus. Dann enthält die erste Textdatei die Einträge $e_k = m_k^c \mod n$. \\
 	\\
