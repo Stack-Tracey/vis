@@ -21,14 +21,14 @@
 	Hierbei wird der bekannte Klartext M mit allen möglichen Belegungen für $K_{1}$ verschlüsselt. Beide Werte für $K_{1}$ und v werden in einer Tabelle gespeichert $[[\{value: k_{1i}\} ,\{v_{i}\}], ... ]$ Das selbe geschieht für die bekannte Chiffre C aus M. Diese wird wiederum mit allen möglichen Belegungen für $K_{2}$ entschlüsselt und auch hier werden die Werte in eine Tabelle geschrieben $[[\{value: k_{2j}\} ,\{w_{j}\}], ... ]$ . Gillt nun $v_{i} == w_{j}$ für ein bestimmtes Paar i und j, dann sind $K_{1i}$ und $K_{2j}$ die gesuchten Schlüssel.\\\
 	Der Auffwand beträgt:
 	$2^{56}+2^{56} =2\cdot 2^{56} =2^{57}$\\\
-	–  Sicherheitsgewinn wäre nur 1 Bit
+	–  Sicherheitsgewinn wäre nur 1 Bit
 	\\\\\\
 	 \textbf{Wir sollen diese Sicherheit mit der Vergleichen, die durch zwei 56 bit Ks erreicht wird, aber genau das tun wir ja hier. Weis jemand von euch was die wollen??}
 		
 	\subsection*{b)}
 	Die effektive Sicherheit eines 3-DES mit 3 Schlüsseln:\\\
 	$2^{56}+2^{56}+2^{56} =2\cdot 2\cdot 2^{56} =2^{58}$\\\
-	–  Sicherheitsgewinn wären somit zwei Bit, was im Gegensatz zum Sicherheitsgewinn von DES zu DES-2 signifikant mehr ist, da es sich hier um exponentielles Wachstum handelt. Der 3-DES mit 3 Schlüsseln ist doppelt so sicher wie
+	–  Sicherheitsgewinn wären somit zwei Bit, was im Gegensatz zum Sicherheitsgewinn von DES zu DES-2 signifikant mehr ist, da es sich hier um exponentielles Wachstum handelt. Der 3-DES mit 3 Schlüsseln ist doppelt so sicher wie
 	 2-DES.
 	 	\\\\\\
 	 \textbf{Der Aufgabenteil ist nur angefangen und mit Unsicherheiten, kann sich da noch wer dran setzen?}
@@ -59,6 +59,41 @@
 	\subsection*{a)}
 	
 	\subsection*{b)}
+	Sei zunächst $m_k$ das $k$-te Zeichen des Textes, $c$ der Exponent aus der zweiten Textdatei sowie $n$ der zugehörige Modulus. Dann enthält die erste Textdatei die Einträge $e_k = m_k^c \mod n$. \\
+	\\
+	Die erste Möglichkeit besteht darin, für ein beliebiges $k$ das $m\in\{0,...,256\}$ mit $m^c\mod n=e_k$ durch Ausprobieren zu bestimmen. Dann lässt sich durch iterieren über $i\in\{0,...\}$ das $i$ mit $e_k^i \mod n = m$ bestimmen. Dieses $i$ ist das $d$ des privaten Schlüssels, mit dem sich der Rest der Textdatei entschlüsseln lässt. \\
+	\\
+	Die zweite Möglichkeit besteht darin, ein Dictionary $f$ mit $f(m^c \mod n) = m\ \forall m\in \{0,...,256\}$ zu erstellen und mithilfe dieses Dictionaries die Datei zu entschlüsseln. Diese Möglichkeit wurde im folgenden Racket-Programm inplemeniert:
+	\begin{lstlisting}
+#lang racket
+; ############# Loading Data ################################
 	
-		
+(define schluesseltexte (file->list "ciphertext.txt"))
+
+(define publickey (car (file->list "public_key.txt")))
+(define modulus (cadr (file->list "public_key.txt")))
+
+; ############# Creating Dictionany ##########################
+
+(define klartextliste (range 0 256))
+
+(define dict (map
+	(lambda (klartext)
+		(cons klartext
+			(remainder (expt klartext publickey) modulus)))
+	klartextliste))
+
+; ############## Do attack ###################################
+
+(define (finde-klartext schluesseltext)
+	(car (findf (lambda (entry)
+			(= schluesseltext (cdr entry)))
+			dict)))
+
+(list->string (map (compose1
+		integer->char
+		finde-klartext)
+	schluesseltexte))
+	\end{lstlisting}
+Der berechnete Klartext lautet "Fuer die VIS-Klausur sind alle Inhalte, die in Uebung und Vorlesung behandelt wurden wichtig. Viel Erfolg! :-)"
 	\end{document}
