@@ -1,0 +1,102 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+%	\usepackage{tikz}
+	\usepackage{listings}
+	\usepackage{color}
+	\usepackage{amsmath}
+	\definecolor{lightgray}{rgb}{.9,.9,.9}
+	\definecolor{darkgray}{rgb}{.4,.4,.4}
+	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+	% Folgende Angaben bitte anpassen
+	\renewcommand{\Vorlesung}{VIS}
+	\renewcommand{\Semester}{WiSe 2017}
+	\renewcommand{\Aufgabenblatt}{7}
+	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\begin{document}
+	\setcounter{section}{0}
+
+	\aufgabe{Kryptografie}
+	
+	\subsection*{a)}
+	Der Angreifer könnte relativ einfach mit einer known-plaintext-attack die Schlüssel $K_{1}$ und $K_{2}$ heraus finden.
+	Hierbei wird der bekannte Klartext M mit allen möglichen Belegungen für $K_{1}$ verschlüsselt. Beide Werte für $K_{1}$ und v werden in einer Tabelle gespeichert $[[\{value: k_{1i}\} ,\{v_{i}\}], ... ]$ Das selbe geschieht für die bekannte Chiffre C aus M. Diese wird wiederum mit allen möglichen Belegungen für $K_{2}$ entschlüsselt und auch hier werden die Werte in eine Tabelle geschrieben $[[\{value: k_{2j}\} ,\{w_{j}\}], ... ]$ . Gillt nun $v_{i} == w_{j}$ für ein bestimmtes Paar i und j, dann sind $K_{1i}$ und $K_{2j}$ die gesuchten Schlüssel.\\\
+	Der Auffwand beträgt:
+	$2^{56}+2^{56} =2\cdot 2^{56} =2^{57}$\\\
+	–  Sicherheitsgewinn wäre nur 1 Bit
+	\\\\\\
+	 \textbf{Wir sollen diese Sicherheit mit der Vergleichen, die durch zwei 56 bit Ks erreicht wird, aber genau das tun wir ja hier. Weis jemand von euch was die wollen??}
+		
+	\subsection*{b)}
+	Die effektive Sicherheit eines 3-DES mit 3 Schlüsseln:\\\
+	$2^{56}+2^{56}+2^{56} =2\cdot 2\cdot 2^{56} =2^{58}$\\\
+	–  Sicherheitsgewinn wären somit zwei Bit, was im Gegensatz zum Sicherheitsgewinn von DES zu DES-2 signifikant mehr ist, da es sich hier um exponentielles Wachstum handelt. Der 3-DES mit 3 Schlüsseln ist doppelt so sicher wie
+	 2-DES.
+	 	\\\\\\
+	 \textbf{Der Aufgabenteil ist nur angefangen und mit Unsicherheiten, kann sich da noch wer dran setzen?}
+		
+    \aufgabe{Unsicherheit des Electronic-Codebook-Modus}
+    
+	\aufgabe{Cipher-Block-Chaining-Modus}
+	
+	\subsection*{a)}
+	Zwei identische Klartexte die lediglich einen anderen Initialisierungsvektor haben sind nur in der Länge identisch.
+	Der Vektor wird genutzt um eine vom Schlüssel unabhängige randomisierung zu erreichen.
+	
+	\subsection*{b)}
+	Auch hier unterscheidet sich das Chiffrat stark voneinader, da Folgeblöcke vom Vorgänger abhängen. Ändert sich also ein Bit im ersten Block, hat das Auswirkungen auf alle folgenden.
+	
+	\subsection*{c)}
+	Eine Änderung eines Bits in einem Chiffratblock hat zur Folge, dass der entsprechende Nachrichtenblock randomisiert wird, während im Klartext des darauffolgenden Blocks genau die gleichen Bits geändert werden.
+
+	\subsection*{d)}
+	Die entschlüsselung wäre nur möglich, wenn der Initialisierungsverktor bekannt ist. Diesen könnte man dann mit sämtlichen möglichen Belegungen durchtesten und die Ergebnisse Vergleichen.
+	
+	\aufgabe{Hybrides Kryptosystem}
+	
+	\aufgabe{Das Diffi-Hellmann-Schlüsselaustauschprotokoll}
+	
+	\aufgabe{Sicherheit des RSA Verfahrens}
+	
+	\subsection*{a)}
+	
+	Das RSA-Verfahren basiert auf der Faktorisierungsannhame, die besagt, dass es nicht effizient möglich ist, die Primfaktoren einer großen Zahl zu berechnen. \\
+	Ein Angreifer besitzt den öffentlichen Schlüssel, der beispielsweise die Werte $c=7$ und $n=299$ haben kann, und die verschlüsselte Nachricht, die beispielsweise $c(m)=107$ lauten kann. Aufgrund der Faktorisierungsannahme, kann der Angreifer nicht die beiden Primfaktoren $p=13$ und $q=23$ von $n$ bestimmen. Dadurch ist es ihm nicht möglich die Zahl $\phi(n)=(p-1)\cdot(q-1)=(13-1)\cdot(23-1)=264$ zu bestimmen, die er benötigen würde, um mit Hilfe des erweiterten euklidischen Algorithmus das multiplikative Inverse $d$ von $c$ in $\phi(n)$ mit $d=151$ zu errechnen. Da der Angreifer also aufgrund der Faktorisierungsannahme mit diesem Verfahren nicht an das $d$ kommen wird, wird er nie herausfinden, dass der Inhalt der Nachricht $c(m)^d \mod n = 107^{151} \mod 299 = 42$ lautet.
+	
+	\subsection*{b)}
+	Sei zunächst $m_k$ das $k$-te Zeichen des Textes, $c$ der Exponent aus der zweiten Textdatei sowie $n$ der zugehörige Modulus. Dann enthält die erste Textdatei die Einträge $e_k = m_k^c \mod n$. \\
+	\\
+	Die erste Möglichkeit besteht darin, für ein beliebiges $k$ das $m\in\{0,...,256\}$ mit $m^c\mod n=e_k$ durch Ausprobieren zu bestimmen. Dann lässt sich durch iterieren über $i\in\{0,...\}$ das $i$ mit $e_k^i \mod n = m$ bestimmen. Dieses $i$ ist das $d$ des privaten Schlüssels, mit dem sich der Rest der Textdatei entschlüsseln lässt. \\
+	\\
+	Die zweite Möglichkeit besteht darin, ein Dictionary $f$ mit $f(m^c \mod n) = m\ \forall m\in \{0,...,256\}$ zu erstellen und mithilfe dieses Dictionaries die Datei zu entschlüsseln. Diese Möglichkeit wurde im folgenden Racket-Programm inplemeniert:
+	\begin{lstlisting}
+#lang racket
+; ############# Loading Data ################################
+	
+(define schluesseltexte (file->list "ciphertext.txt"))
+
+(define publickey (car (file->list "public_key.txt")))
+(define modulus (cadr (file->list "public_key.txt")))
+
+; ############# Creating Dictionany ##########################
+
+(define klartextliste (range 0 256))
+
+(define dict (map
+	(lambda (klartext)
+		(cons klartext
+			(remainder (expt klartext publickey) modulus)))
+	klartextliste))
+
+; ############## Do attack ###################################
+
+(define (finde-klartext schluesseltext)
+	(car (findf (lambda (entry)
+			(= schluesseltext (cdr entry)))
+			dict)))
+
+(list->string (map (compose1
+		integer->char
+		finde-klartext)
+	schluesseltexte))
+	\end{lstlisting}
+Der berechnete Klartext lautet "Fuer die VIS-Klausur sind alle Inhalte, die in Uebung und Vorlesung behandelt wurden wichtig. Viel Erfolg! :-)"
+	\end{document}

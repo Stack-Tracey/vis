@@ -1,0 +1,69 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+%	\usepackage{tikz}
+	\usepackage{listings}
+	\usepackage{color}
+	\usepackage{amsmath}
+	\definecolor{lightgray}{rgb}{.9,.9,.9}
+	\definecolor{darkgray}{rgb}{.4,.4,.4}
+	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+	% Folgende Angaben bitte anpassen
+	\renewcommand{\Vorlesung}{VIS}
+	\renewcommand{\Semester}{WiSe 2017}
+	\renewcommand{\Aufgabenblatt}{6}
+	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\begin{document}
+	\setcounter{section}{0}
+
+	\aufgabe{Logische Uhren}
+	
+	\subsection*{a)}
+	\begin{tabular}{c|c|c}
+		Ereignis & Lamportzeit & Vektorzeit \\
+		\hline
+		a & 3 & (1,0,2)\\
+		b & 4 & (2,0,2) \\
+		c & 9 & (3,5,3) \\
+		
+		d & 2 & (0,1,1) \\
+		e & 5 & (2,2,2) \\
+		f & 6 & (2,3,2) \\
+		g & 7 & (2,4,3) \\
+		h & 8 & (2,5,3) \\
+		
+		i & 1 & (0,0,1) \\
+		j & 2 & (0,0,2) \\
+		k & 3 & (0,0,3) \\
+		l & 7 & (2,3,4) \\
+	\end{tabular}
+
+	\subsection*{b)}
+	
+    \aufgabe{Anpassung von Zeit}
+    
+	\aufgabe{Zeitsynchronisation}
+	
+	\subsection*{a)}
+	Die im Folgenden genutzten Variablen sind wie auf der Folie über die Cristians-Methode aus der Vorlesung benannt.
+	\begin{align*}
+		t&=10:14:05\\
+		T_{round} &= 10:14:06 - 10:14:00 = 00:00:06 \\
+		T_{trans} &= \frac{T_{round}}{2}= \frac{00:00:06}{2}=00:00:03 \\
+		T_{sync} &= t+T_{trans} = 10:14:05+00:00:03 = 10:14:08
+	\end{align*}
+	\subsection*{b)}
+	Die Berechnung mit der Cristians-Methode basiert auf der Annahme, dass die beiden Nachrichten die gleiche Laufzeit haben. Diese Annahme wird benötigt, um die Übertragungszeit der Antwort aus der Summe der Übertragungszeiten errechnen zu können.
+	\aufgabe{Bully-Algorithmus}
+	
+	\subsection*{a)}
+	Der Bully-Algorithmus wird eingesetzt, sobald ein Koordinator Prozess in einem verteilten System abstürzt und ein neuer benötigt wird.
+	Wenn ein Prozess p z.B. durch einen timeout feststellt, dass der Koordinator Prozess x nicht mehr erreichbar ist, sendet dieser einen request an alle Prozesse mit höherer ID Q, so dass gilt Q.ID > p.ID und wartet auf deren response. Kommt einer, hört p auf zu senden und der Prozess der geantwortet hat, sendet wiederum rekursiv an alle höheren Prozesse. Es gilt p = x sobald p keine Antworten erhält. Dieser teilt per boradcast mit nun neuer Koodinator zu sein.
+
+	5 sendet request an 9 und 11\\
+	5 bekommt Antwort von 9\\
+	5 hört auf zu senden\\
+	9 sendet request an 11\\
+	9 bekommt keine Antwort\\
+	9 wird Koordinator\\
+	9 broadcasted die Nachricht der neue Koodinator zu sein an 3 und 5 	
+		
+	\end{document}

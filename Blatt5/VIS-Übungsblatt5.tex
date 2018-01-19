@@ -1,0 +1,71 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+%	\usepackage{tikz}
+	\usepackage{listings}
+	\usepackage{color}
+	\definecolor{lightgray}{rgb}{.9,.9,.9}
+	\definecolor{darkgray}{rgb}{.4,.4,.4}
+	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+	% Folgende Angaben bitte anpassen
+	\renewcommand{\Vorlesung}{VIS}
+	\renewcommand{\Semester}{WiSe 2017}
+	\renewcommand{\Aufgabenblatt}{5}
+	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\begin{document}
+	\setcounter{section}{0}
+
+	\aufgabe{Domain Name System}
+	
+	
+	\subsection*{a)}
+	
+	\subsection*{c)}
+
+  Der Befehl \texttt{dig www.inf.uni-hamburg.de. @213.73.91.35}
+  lieferte folgende IP-Adresse: 134.100.56.130.
+  \newline
+
+	\subsection*{d)}
+
+	\subsection*{e)}
+
+	\aufgabe{Remote Method Invocation}
+	
+	\subsection*{b)}
+  Der Server erstellt und exportiert eine RMI-Registry, die für einen bestimmten 
+  Port request akzeptiert. Bei der Registry wird auch das Remote Objekt
+  angemeldet.  Der Client holt sich über die RMI-Registry die Referenz des
+  Remote Objektes vom Server. Nach erhalt der Referenz zum Remote Objekt,
+  kann der Client über ein Interface Methoden an seinem Remote Objekt aufrufen.
+  Der Client erhält Rückgabewerte, sowie die zu beachtenden RemoteExceptions.
+  Die JVM vom Server führt die Methoden auf dem Objekt aus.
+
+	\subsection*{c)}
+  Es gibt 3 Fehlersemantiken:
+
+  \begin{itemize}
+    \item At-most-once-Sematik
+      \begin{itemize}
+        \item es wird höchstens ein Ergebnis oder eine Exception zurückgegeben
+        \item Übertragungsfehler können durch neuübertragung maskiert werden
+      \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+    \item At-least-once-Semantik
+      \begin{itemize}
+        \item Es wird mindestens ein oder mehrere Aufrufe gemacht
+        \item für jeden wird ein Ergebnis oder eine Exception zurückgeliefert
+        \item nur gültig wenn Aufrufe den gleichen Wert zurückliefern (Idempotenz)
+      \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+    \item Maybe-Semantik 
+      \begin{itemize}
+        \item es wird entweder ein Ergebnis oder eine Exception zurückgeliefert
+        \item kritsch sind hierbei Übertragnungsfehler oder Servercrashfehler
+        \item diese Fehler können eventuell nicht wahrgenommen werden 
+      \end{itemize}
+  \end{itemize}
+
+\end{document}

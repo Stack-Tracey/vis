@@ -1,0 +1,52 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+%	\usepackage{tikz}
+	\usepackage{listings}
+	\usepackage{color}
+	\definecolor{lightgray}{rgb}{.9,.9,.9}
+	\definecolor{darkgray}{rgb}{.4,.4,.4}
+	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+	% Folgende Angaben bitte anpassen
+	\renewcommand{\Vorlesung}{VIS}
+	\renewcommand{\Semester}{WiSe 2017}
+	\renewcommand{\Aufgabenblatt}{4}
+	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\begin{document}
+	\setcounter{section}{0}
+
+	\aufgabe{Fehlertoleranz}
+
+	\subsection*{3)}
+  Die beiden Datenbankserver sind zu 0,5\% nicht verfügbar. Die 150 Webserver
+	sind mit jeweils 0,5\% unverfügbar.
+	Für den Gesamtausfall ergibt sich folgende Rechnung: \newline
+	$0.1* 0.05 + {0.05}^{150} = 0.005 + 0 = 0.005$ \newline
+	Da es sich hier um Webserver und Datenbankserver handelt, müssen einerseits
+	beide Datenbanken
+	oder alle Webserver ausfallen, sodass der Dienst nicht mehr verfügbar ist.
+	Da die Ausfallwahrscheinlichkeit der 150 Webserver ganz nah bei 0 liegt, ist
+	nur die Ausfallwahrscheinlichkeit der Datenbankserver zu betrachten.
+	\newline
+	Die Anzahl an Stunden, die der Dienst nicht zur Verfügung steht , ergibt sich wie folgt: \newline
+	$365 * 24 * 0.005 = 43.8 Stunden$ \newline
+	Der Server ist nach der Rechnung 43.8 Stunden im Jahr nicht verfügbar.
+	Das Versprechen ist eine Lüge!
+	
+	\subsection*{5)}
+
+  \subsubsection*{a}
+  Die Gesamtverfügbarkeit ergibt sich wie folgt: \newline
+  \newline
+  $A = \frac{365 Tage * 5 Jahre * 24 Stunden * 60 Minuten - 260 Minuten}{365 Tage * 5
+  Jahre * 24 Stunden * 60 Minuten}= 99.990106 \%$
+  
+
+	\aufgabe{Kryptographie}
+	
+	\subsection*{7)}
+  \subsubsection*{a}
+  Der Angreifer erfährt die Länge des Klartextes.
+    \subsubsection*{b}
+In dem beschriebenen Fall, ist es möglich, dass ein Angreifer den Klartext $x_1$ durch einen Klartext $y$ rät. Wenn der Angreifen nun, $s_1$ und $y$ bitweise XOR-verknüpft, erfährt er einen Text $l$ der als Schlüsselfolge in Frage kommt. Wenn der Angreifer nun $l$ und $s_2$ und bekommt er $x_2$ heraus, falls $y=x_1$ gilt. Da $x_2$ ein sinnvoller Klartext ist, wird der Angreifer erkennen, sobald er das richtige $y$ gewählt hat und kann so die Schlüsselfolge ermitteln.
+      \subsubsection*{c}
+      Der Schlüssel lautet $HUPE$, bzw. $72\ 85\ 80\ 69$.
+\end{document}
