@@ -3,6 +3,7 @@
 	\usepackage{listings}
 	\usepackage{color}
 	\usepackage{amsmath}
+	\usepackage[autostyle=true,german=quotes]{csquotes}
 	\definecolor{lightgray}{rgb}{.9,.9,.9}
 	\definecolor{darkgray}{rgb}{.4,.4,.4}
 	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
@@ -11,63 +12,83 @@
 	\renewcommand{\Semester}{WiSe 2017}
 	\renewcommand{\Aufgabenblatt}{7}
 	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\lstdefinestyle{Racket}{
+		language=Lisp,
+		showspaces=false,
+		breaklines=true,
+		showtabs=false,
+		showstringspaces=false,
+		frame=single,
+		numbers=left,
+		tabsize=2,
+		backgroundcolor=\color{lightgray},
+		extendedchars=true,
+		basicstyle=\ttfamily,
+		keywordstyle=\bfseries\color{green!40!black},
+		commentstyle=\itshape\color{purple!40!black},
+		identifierstyle=\color{blue},
+		stringstyle=\color{orange},
+	}
 	\begin{document}
 	\setcounter{section}{0}
 
 	\aufgabe{Kryptografie}
 	
 	\subsection*{a)}
-	Der Angreifer könnte relativ einfach mit einer known-plaintext-attack die Schlüssel $K_{1}$ und $K_{2}$ heraus finden.
-	Hierbei wird der bekannte Klartext M mit allen möglichen Belegungen für $K_{1}$ verschlüsselt. Beide Werte für $K_{1}$ und v werden in einer Tabelle gespeichert $[[\{value: k_{1i}\} ,\{v_{i}\}], ... ]$ Das selbe geschieht für die bekannte Chiffre C aus M. Diese wird wiederum mit allen möglichen Belegungen für $K_{2}$ entschlüsselt und auch hier werden die Werte in eine Tabelle geschrieben $[[\{value: k_{2j}\} ,\{w_{j}\}], ... ]$ . Gillt nun $v_{i} == w_{j}$ für ein bestimmtes Paar i und j, dann sind $K_{1i}$ und $K_{2j}$ die gesuchten Schlüssel.\\\
-	Der Auffwand beträgt:
-	$2^{56}+2^{56} =2\cdot 2^{56} =2^{57}$\\\
-	–  Sicherheitsgewinn wäre nur 1 Bit
-	\\\\\\
-	 \textbf{Wir sollen diese Sicherheit mit der Vergleichen, die durch zwei 56 bit Ks erreicht wird, aber genau das tun wir ja hier. Weis jemand von euch was die wollen??}
+	Der Angreifer könnte relativ einfach mit einer \textit{Meet-in-the-middle attack} die Schlüssel $k_{1}$ und $k_{2}$ heraus finden:
+	\begin{alignat*}{3}
+		& \ C \ &=& \ E_{k_2}\left( E_{k_1}\left( P \right)  \right)\\
+		\Leftrightarrow& \ D_{k_2} \left( C\right) \ &=& \ D_{k_2} \left( E_{k_2} \left( E_{k_1} \left( P \right) \right) \right)  \\
+		\Leftrightarrow& \ D_{k_2} \left( C \right) \ &=& \ E_{k_1} \left( P \right)  
+	\end{alignat*}
+	Hierbei wird der bekannte Klartext P mit allen möglichen Belegungen für $k_{1}$ verschlüsselt. Beide Werte für $k_{1}$ und v werden in einer Tabelle gespeichert $[[\{value: k_{1i}\} ,\{v_{i}\}], ... ]$. Das selbe geschieht für die bekannte Chiffre C aus P. Diese wird wiederum mit allen möglichen Belegungen für $k_{2}$ entschlüsselt und auch hier werden die Werte in eine Tabelle geschrieben $[[\{value: k_{2j}\} ,\{w_{j}\}], ... ]$ . Gilt nun $v_{i} = w_{j}$ für ein bestimmtes Paar i und j, dann sind $k_{1i}$ und $k_{2j}$ die gesuchten Schlüssel.\\\
+	Der Aufwand beträgt:
+	$2^{56}+2^{56} =2\cdot 2^{56} =2^{57}$\\
+	
+	Der Sicherheitsgewinn wäre nur 1 Bit gegenüber der \enquote{versprochenen} Verdopplung $\left( 2\cdot 56 = 112\right) $.
 		
 	\subsection*{b)}
-	Die effektive Sicherheit eines 3-DES mit 3 Schlüsseln:\\\
-	$2^{56}+2^{56}+2^{56} =2\cdot 2\cdot 2^{56} =2^{58}$\\\
-	–  Sicherheitsgewinn wären somit zwei Bit, was im Gegensatz zum Sicherheitsgewinn von DES zu DES-2 signifikant mehr ist, da es sich hier um exponentielles Wachstum handelt. Der 3-DES mit 3 Schlüsseln ist doppelt so sicher wie
-	 2-DES.
-	 	\\\\\\
-	 \textbf{Der Aufgabenteil ist nur angefangen und mit Unsicherheiten, kann sich da noch wer dran setzen?}
+	Die erwartete Sicherheit eines 3-DES mit 2 Schlüsseln beträgt \[ 2^{56}\cdot2^{56} =2^{112} \text{ Bit,} \] da der obige Angriff nun nicht mehr möglich ist und Chosen-Plaintext-Angriffe nicht angenommen werden.	
+	
+	Die erwartete Sicherheit eines 3-DES mit 3 Schlüsseln gegenüber Exhaustive-Search betrüge:
+	\[ 2^{56}\cdot2^{56}\cdot2^{56} =2^{168} \text{ Bit} \]
+	Mittels einer abgewandelten \textit{Meet-in-the-middle attack} verringert sie diese jedoch auf $112$ Bit. Die ersten beiden Stufen $E\left( k_1 \right) \rightarrow D\left( k_2 \right)$  bzw. $E\left( k_1 \right) \rightarrow E\left( k_2 \right)$ werden für sämtliche möglichen $k_1$ und $k_2$ durchgeführt $\left(\text{Aufwand: } 2^{2\cdot56} = 2^{112} \right) $ und in einer Map $\left(\text{SubCipher} \rightarrow  \left( k_1, k_2\right)\right)$ gespeichert. Da offensichtlich $E_{k_1} \left( D_{k_2} \left( P \right) \right) = D_{k_3}\left( C \right)$ und $E_{k_1} \left( E_{k_2} \left( P \right) \right) = D_{k_3}\left( C \right)$ gelten, muss nun noch für alle möglichen $k_3$  $D_{k_3}\left( C \right)$ gebildet werden und nach einer Kollision mit einem Eintrag in der vorher angelegten Map gesucht werden $\left(\text{Aufwand: } 2^{56}\right) $. Insgesamt beläuft sich der Aufwand somit auf $2^{112}+2^{56} \approx 2^{112}$. 
+	
+	Angenommen, dass Chosen-Plaintext-Angriffe nicht möglich sind, liefert 3-DES mit 3 Schlüsseln somit ungefähr dieselbe Sicherheit wie 3-DES mit 2 Schlüsseln, auf das derselbe Angriff möglich ist. Aufgrund der verschiedenen Verknüpfungen von $k_1$ mit $k_2$ lässt sich jedoch dabei kein Vorteil daraus ziehen, dass nur zwei verschiedene Schlüssel existieren.
 		
-    \aufgabe{Unsicherheit des Electronic-Codebook-Modus}
+    \setcounter{section}{2}
     
 	\aufgabe{Cipher-Block-Chaining-Modus}
 	
 	\subsection*{a)}
-	Zwei identische Klartexte die lediglich einen anderen Initialisierungsvektor haben sind nur in der Länge identisch.
-	Der Vektor wird genutzt um eine vom Schlüssel unabhängige randomisierung zu erreichen.
+	Zwei identische Klartexte, die lediglich einen anderen Initialisierungsvektor haben, sind nur in der Länge identisch.
+	Der Vektor wird genutzt, um eine vom Schlüssel unabhängige Randomisierung zu erreichen.
 	
 	\subsection*{b)}
-	Auch hier unterscheidet sich das Chiffrat stark voneinader, da Folgeblöcke vom Vorgänger abhängen. Ändert sich also ein Bit im ersten Block, hat das Auswirkungen auf alle folgenden.
+	Auch hier unterscheidet sich das Chiffrat stark voneinander, da Folgeblöcke vom Vorgänger abhängen. Ändert sich also ein Bit im ersten Block, hat dies Auswirkungen auf alle folgenden. Die wird unter anderem durch moderne Blockchiffren begünstigt, die selbst für zwei ansonten identische Klartexte, die sich lediglich in einem Bit unterscheiden und mit demselben Schlüssel zwei sehr unterschiedliche Schlüsseltexte erzeugen.
 	
 	\subsection*{c)}
-	Eine Änderung eines Bits in einem Chiffratblock hat zur Folge, dass der entsprechende Nachrichtenblock randomisiert wird, während im Klartext des darauffolgenden Blocks genau die gleichen Bits geändert werden.
+	Eine Änderung eines Bits in einem Chiffratblock hat zur Folge, dass der entsprechende Klartext nicht mehr korrekt entschlüsselt wird und unleserlich ist (Eigenschaft moderne Blockchiffren). Der Klartext des darauffolgenden Block würde sich jedoch lediglich an derselben Stelle um ein Bit unterscheiden. Höchstwahrscheinlich ist die Nachricht damit noch immer leserlich und weist lediglich einen korrupten Buchstaben auf. Der Klartext des wiederum darauffolgenden Blocks wird nicht beeinträchtigt, weil der Bitfehler maximal eine Auswirkung auf seinen direkten Nachfolger hat. Die Blöcke vor Auftreten des Bitfehler sind ebenfalls nicht beeinträchtigt.
 
 	\subsection*{d)}
-	Die entschlüsselung wäre nur möglich, wenn der Initialisierungsverktor bekannt ist. Diesen könnte man dann mit sämtlichen möglichen Belegungen durchtesten und die Ergebnisse Vergleichen.
+	Der Klartext des ersten Blockes würde sich ebenfalls an derselben Stelle um ein Bit unterscheiden. Höchstwahrscheinlich ist die Nachricht damit noch immer leserlich und weist lediglich einen korrupten Buchstaben auf. Alle darauffolgenden Blöcke können problemlos entschlüsselt werden, da der IV dort nicht zur Entschlüsselung erforderlich ist.
 	
-	\aufgabe{Hybrides Kryptosystem}
-	
-	\aufgabe{Das Diffi-Hellmann-Schlüsselaustauschprotokoll}
+    \setcounter{section}{5}
 	
 	\aufgabe{Sicherheit des RSA Verfahrens}
 	
 	\subsection*{a)}
 	
-	Das RSA-Verfahren basiert auf der Faktorisierungsannhame, die besagt, dass es nicht effizient möglich ist, die Primfaktoren einer großen Zahl zu berechnen. \\
-	Ein Angreifer besitzt den öffentlichen Schlüssel, der beispielsweise die Werte $c=7$ und $n=299$ haben kann, und die verschlüsselte Nachricht, die beispielsweise $c(m)=107$ lauten kann. Aufgrund der Faktorisierungsannahme, kann der Angreifer nicht die beiden Primfaktoren $p=13$ und $q=23$ von $n$ bestimmen. Dadurch ist es ihm nicht möglich die Zahl $\phi(n)=(p-1)\cdot(q-1)=(13-1)\cdot(23-1)=264$ zu bestimmen, die er benötigen würde, um mit Hilfe des erweiterten euklidischen Algorithmus das multiplikative Inverse $d$ von $c$ in $\phi(n)$ mit $d=151$ zu errechnen. Da der Angreifer also aufgrund der Faktorisierungsannahme mit diesem Verfahren nicht an das $d$ kommen wird, wird er nie herausfinden, dass der Inhalt der Nachricht $c(m)^d \mod n = 107^{151} \mod 299 = 42$ lautet.
+	Das RSA-Verfahren basiert auf der Faktorisierungsannahme, die behauptet, dass es nicht effizient möglich ist, die Primfaktoren einer großen Zahl zu berechnen. \\
+	Ein Angreifer besitzt den öffentlichen Schlüssel, der beispielsweise die Werte $c=7$ und $n=299$ haben kann, und die verschlüsselte Nachricht, die beispielsweise $c(m)=107$ lauten kann. Aufgrund der Faktorisierungsannahme, kann der Angreifer die beiden Primfaktoren $p=13$ und $q=23$ von $n$ nicht in zumutbarer Zeit bestimmen. Dadurch ist es ihm nicht möglich die Zahl $\phi(n)=(p-1)\cdot(q-1)=(13-1)\cdot(23-1)=264$ zu bestimmen, die er benötigen würde, um mit Hilfe des erweiterten euklidischen Algorithmus das multiplikative Inverse $d$ von $c$ in $\phi(n)$ mit $d=151$ zu errechnen. Da der Angreifer also aufgrund der Faktorisierungsannahme mit diesem Verfahren nicht an das $d$ kommen wird, wird er nie herausfinden, dass der Inhalt der Nachricht $c(m)^d \mod n = 107^{151} \mod 299 = 42$ lautet.
 	
 	\subsection*{b)}
-	Sei zunächst $m_k$ das $k$-te Zeichen des Textes, $c$ der Exponent aus der zweiten Textdatei sowie $n$ der zugehörige Modulus. Dann enthält die erste Textdatei die Einträge $e_k = m_k^c \mod n$. \\
+	Sei zunächst $m_k$ das $k$-te Zeichen des Textes, $c$ der Exponent aus der zweiten Textdatei sowie $n$ der zugehörige Modulo. Dann enthält die erste Textdatei die Einträge $e_k = m_k^c \mod n$. \\
 	\\
-	Die erste Möglichkeit besteht darin, für ein beliebiges $k$ das $m\in\{0,...,256\}$ mit $m^c\mod n=e_k$ durch Ausprobieren zu bestimmen. Dann lässt sich durch iterieren über $i\in\{0,...\}$ das $i$ mit $e_k^i \mod n = m$ bestimmen. Dieses $i$ ist das $d$ des privaten Schlüssels, mit dem sich der Rest der Textdatei entschlüsseln lässt. \\
+	Die erste Möglichkeit besteht darin, für ein beliebiges $k$ das $m\in\{0,...,256\}$ mit $m^c\mod n=e_k$ durch Ausprobieren zu bestimmen. Dann lässt sich durch Iterieren über $i\in\{0,...\}$ das $i$ mit $e_k^i \mod n = m$ bestimmen. Dieses $i$ ist das $d$ des privaten Schlüssels, mit dem sich der Rest der Textdatei entschlüsseln lässt. \\
 	\\
-	Die zweite Möglichkeit besteht darin, ein Dictionary $f$ mit $f(m^c \mod n) = m\ \forall m\in \{0,...,256\}$ zu erstellen und mithilfe dieses Dictionaries die Datei zu entschlüsseln. Diese Möglichkeit wurde im folgenden Racket-Programm inplemeniert:
-	\begin{lstlisting}
+	Die zweite Möglichkeit besteht darin, ein Dictionary $f$ mit $f(m^c \mod n) = m\ \forall m\in \{0,...,256\}$ zu erstellen und mithilfe dieses Dictionarys die Datei zu entschlüsseln. Diese Möglichkeit wurde im folgenden Racket-Programm implementiert:
+	\begin{lstlisting}[style=Racket]
 #lang racket
 ; ############# Loading Data ################################
 	
