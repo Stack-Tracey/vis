@@ -6,14 +6,24 @@ import java.util.Date;
 
 public class Notiz {
 
+	private int id;
 	private String text;
 	private String author;
 	private long timestamp;
 	
-	public Notiz(long timestamp, String text, String author) {
+	public Notiz(int id, long timestamp, String text, String author) {
+		setId(id);
 		setTimestamp(timestamp);
 		setText(text);
 		setAuthor(author);
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getText() {

@@ -1,0 +1,44 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+%	\usepackage{tikz}
+	\usepackage{listings}
+	\usepackage{color}
+	\usepackage{amsmath}
+	\usepackage[autostyle=true,german=quotes]{csquotes}
+	\definecolor{lightgray}{rgb}{.9,.9,.9}
+	\definecolor{darkgray}{rgb}{.4,.4,.4}
+	\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+	% Folgende Angaben bitte anpassen
+	\renewcommand{\Vorlesung}{VIS}
+	\renewcommand{\Semester}{WiSe 2017}
+	\renewcommand{\Aufgabenblatt}{8}
+	\renewcommand{\Teilnehmer}{Hennings, Regorz, Röder, Budde, Warrelmann}
+	\lstdefinestyle{Racket}{
+		language=Lisp,
+		showspaces=false,
+		breaklines=true,
+		showtabs=false,
+		showstringspaces=false,
+		frame=single,
+		numbers=left,
+		tabsize=2,
+		backgroundcolor=\color{lightgray},
+		extendedchars=true,
+		basicstyle=\ttfamily,
+		keywordstyle=\bfseries\color{green!40!black},
+		commentstyle=\itshape\color{purple!40!black},
+		identifierstyle=\color{blue},
+		stringstyle=\color{orange},
+	}
+	\begin{document}
+	\aufgabe{Service-orientierte Architekturen}
+	a
+	\aufgabe{Microservices}
+	a
+	\aufgabe{REST-Service}
+	\subsection{a)} \\
+	Anlegen einer Notiz: POST /notizen \\
+	Auslesen aller angelegten Notizen: GET /notizen \\
+	Auslesen einer bestimmten Notiz: GET /notizen/:id \\
+	Löschen einer bestimmten Notiz: DELETE /notizen/:id
+	
+	\end{document}
